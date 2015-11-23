@@ -21,11 +21,12 @@
         android:text="Gravar"
         android:layout_below="@id/botonreproducir"
         android:id="@+id/botongravar"/>
-    <ImageButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/botonimagen"
-        android:layout_below="@id/botongravar"/>
+        android:layout_below="@id/botongravar"
+        android:text="FOTO"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

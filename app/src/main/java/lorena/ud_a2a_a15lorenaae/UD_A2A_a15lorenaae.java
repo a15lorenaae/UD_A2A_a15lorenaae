@@ -35,7 +35,7 @@ public class UD_A2A_a15lorenaae extends AppCompatActivity {
     private String nomefoto="mifoto.jpg";
     private boolean pause;
     Button botongravar;
-    ImageButton botonfoto;
+    Button botonfoto;
     Button botonreproducir;
     Spinner listaaudios;
     private MediaRecorder mediaRecorder;
@@ -52,7 +52,7 @@ public class UD_A2A_a15lorenaae extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ud__a2_a_a15lorenaae);
         mediaplayer = new MediaPlayer();
-        botonfoto = (ImageButton) findViewById(R.id.botonimagen);
+        botonfoto = (Button) findViewById(R.id.botonimagen);
         botongravar = (Button) findViewById(R.id.botongravar);
         botonreproducir = (Button) findViewById(R.id.botonreproducir);
         listaaudios=(Spinner)findViewById(R.id.listaaudios);
@@ -142,25 +142,31 @@ public class UD_A2A_a15lorenaae extends AppCompatActivity {
             }
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode==REQUEST_CODE_GRAVACION_OK){
-            if(resultCode==RESULT_OK){
-                Bitmap imagen=(Bitmap)data.getExtras().get("data");
-                ImageView imgview=(ImageView)findViewById(R.id.imagen);
+            if(resultCode==RESULT_OK) {
+                if (data == null) {
+                    Toast.makeText(this,"NON HAI IMAXE",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Bitmap imagen = (Bitmap) data.getExtras().get("data");
+                ImageView imgview = (ImageView) findViewById(R.id.imagen);
                 imgview.setImageBitmap(imagen);
-                File carpimagen=new File(carpetaImagen);
-                File arquivo=new File(carpimagen,nomefoto);
-                if(!carpimagen.exists()) carpimagen.mkdirs();
+                File carpimagen = new File(carpetaImagen);
+                File arquivo = new File(carpimagen, nomefoto);
+                if (!carpimagen.exists()) carpimagen.mkdirs();
                 else carpimagen.delete();
-                FileOutputStream fos=null;
-                try{
-                    fos=new FileOutputStream(arquivo);
-                    imagen.compress(Bitmap.CompressFormat.JPEG,10,fos);
+                FileOutputStream fos = null;
+                try {
+                    fos = new FileOutputStream(arquivo);
+                    imagen.compress(Bitmap.CompressFormat.JPEG, 10, fos);
                     fos.flush();
                     fos.close();
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
+                if (resultCode==RESULT_CANCELED){
+                    Toast.makeText(UD_A2A_a15lorenaae.this,"Foto Cancelada",Toast.LENGTH_LONG).show();
+                }
 
             }
         }
